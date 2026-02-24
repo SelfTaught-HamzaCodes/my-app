@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react';
 import {
   View,
   Modal,
@@ -24,7 +24,7 @@ const SmoothBottomModal = forwardRef(function SmoothBottomModal(
   const backdropOpacity = useRef(new Animated.Value(0)).current;
   const cardTranslateY = useRef(new Animated.Value(screenHeight)).current;
 
-  const requestClose = () => {
+  const requestClose = useCallback(() => {
     Animated.parallel([
       Animated.timing(backdropOpacity, {
         toValue: 0,
@@ -37,9 +37,9 @@ const SmoothBottomModal = forwardRef(function SmoothBottomModal(
         useNativeDriver: true,
       }),
     ]).start(() => onClose?.());
-  };
+  }, [onClose, backdropOpacity, cardTranslateY]);
 
-  useImperativeHandle(ref, () => ({ requestClose }), [onClose]);
+  useImperativeHandle(ref, () => ({ requestClose }), [requestClose]);
 
   useEffect(() => {
     if (visible) {
@@ -59,7 +59,7 @@ const SmoothBottomModal = forwardRef(function SmoothBottomModal(
         }),
       ]).start();
     }
-  }, [visible]);
+  }, [visible, backdropOpacity, cardTranslateY]);
 
   return (
     <Modal

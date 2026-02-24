@@ -624,9 +624,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
   },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
   buttonText: {
     color: '#2F2F2F',
     fontSize: 20,
