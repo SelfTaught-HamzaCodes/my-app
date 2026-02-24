@@ -9,6 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Expo Snack import fails on asset files; keep locally, exclude from repo
+assets/
+
 # Native
 .kotlin/
 *.orig.*
